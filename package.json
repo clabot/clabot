@@ -1,0 +1,48 @@
+{
+  "name": "clabot",
+  "description": "A bot to take the pain out of Contributor License Agreements",
+  "version": "0.0.0",
+  "homepage": "https://github.com/clabot/clabot",
+  "author": {
+    "name": "Stephan Bönnemann",
+    "email": "clabot@excellenteasy.com",
+    "url": "http://excellenteasy.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/clabot/clabot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/clabot/clabot/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/clabot/clabot/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "./node_modules/grunt-cli/bin/grunt test",
+    "postinstall": "./node_modules/grunt-cli/bin/grunt coffee"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.0",
+    "grunt-cli": "0.1.6",
+    "grunt-contrib-coffee": "~0.6.2",
+    "grunt-contrib-nodeunit": "~0.1.2"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.0"
+  },
+  "keywords": [
+    "CLA",
+    "License",
+    "Contribution",
+    "Bot",
+    "GitHub"
+  ]
+}
