@@ -1,23 +1,14 @@
+'use strict'
+
 _       = require 'lodash'
 express = require 'express'
 
-comment     = require './lib/comment'
-pullRequest = require './lib/pull-request'
+routes = require './lib/routes'
 
-exports.getApp = (options) ->
-  _.defaults options,
-    getContributors: (->[])
-    token: null
-    templates: null
-    templateData:
-      image: no
-      link: null
-      maintainer: null
-    #secrets:
-    #  "#{owner}":
-    #    "#{repo}": hub.secret
-
+exports.createApp = (options) ->
+  # Just pick the options we need
   options = _.pick options, [
+    'getContributorsSync'
     'getContributors'
     'token'
     'templates'
@@ -25,40 +16,30 @@ exports.getApp = (options) ->
     'secrets'
   ]
 
+  # Create new Express app
   app = express()
 
+  # Middleware to allow CORS on all requests
   allowCrossDomain = (req, res, next) ->
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,POST');
     res.header('Access-Control-Allow-Headers', 'Content-Type,X-Hub-Signature');
     next()
 
+  # Middleware to provide clabot options
+  provideClabotOptions = (req, res, next) ->
+    req.clabotOptions = options
+    next()
 
+  # Apply middlewares
   app.use allowCrossDomain
+  app.use provideClabotOptions
   app.use express.bodyParser()
 
-  app.get '/', (req, res) ->
-    res.send 'always at your service, clabot!'
+  # GET
+  app.get '/', routes.default
+  # POST
+  app.post '/notify', routes.notify
 
-  app.post '/notify', (req, res) ->
-    try
-      payload = JSON.parse req.body.payload
-
-      sender = pullRequest.getSender payload
-      contributors = options.getContributors()
-
-      signed = _.contains contributors, sender
-
-      commentData = pullRequest.getData payload
-
-      commentData.body = comment.getCommentBody signed,
-        options.templates,
-        _.extend options.templateData, { sender, payload }
-
-      comment.send options.token, commentData, (err, data) ->
-        console.log err if err
-        res.send (if err then [400,'fail'] else [200,'done'])...
-    catch e
-      res.send 400, 'fail'
-
+  # Finally return app
   app
