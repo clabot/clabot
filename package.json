@@ -29,9 +29,15 @@
     "test": "./node_modules/grunt-cli/bin/grunt test",
     "postinstall": "./node_modules/grunt-cli/bin/grunt coffee"
   },
+  "dependencies": {
+    "github": "0.1.8",
+    "grunt-cli": "0.1.6",
+    "lodash": "~1.0.1",
+    "express": "~3.1.0",
+    "qs": "~0.5.4"
+  },
   "devDependencies": {
     "grunt": "~0.4.0",
-    "grunt-cli": "0.1.6",
     "grunt-contrib-coffee": "~0.6.2",
     "grunt-contrib-nodeunit": "~0.1.2"
   },

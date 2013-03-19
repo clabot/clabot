@@ -6,6 +6,13 @@ module.exports = (grunt) ->
       tests: ['test/*_test.js']
 
     coffee:
+      src:
+        expand: yes
+        cwd: 'src'
+        src: ['**/*.coffee']
+        dest: 'src'
+        ext: '.js'
+
       tests:
         expand: yes
         cwd: 'test'
@@ -16,6 +23,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-nodeunit'
 
-  grunt.registerTask 'test', ['nodeunit']
+  grunt.registerTask 'test', ['coffee', 'nodeunit']
 
   grunt.registerTask 'default', ['test']
