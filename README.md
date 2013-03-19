@@ -15,3 +15,7 @@ You can go to our [sandbox](http://github.com/clabot/sandbox) and open Pull Requ
 ## Getting Your Own
 
 We set up a [sample implementation](http://github.com/clabot/sample). Look at the code to set up your own clabot. A verbose tutorial will follow.
+
+## Attributions
+
+clabot logo by [Proycontec SL.](http://www.proycontec.es/proycontec-3-iconos-gratis-index-es.html) [Creative Commons Attribution-Share Alike 3.0](http://creativecommons.org/licenses/by-sa/3.0/us/)
