@@ -5,19 +5,15 @@ path = require 'path'
 
 comment = require '../src/lib/comment'
 
-alreadySigned = fs.readFileSync path.resolve(__dirname, 'fixtures/alreadySigned.md'), 'UTF-8'
-notYetSigned  = fs.readFileSync path.resolve(__dirname, 'fixtures/notYetSigned.md'), 'UTF-8'
-
-templates =
-  alreadySigned: fs.readFileSync path.resolve(__dirname, '../src/templates', 'alreadySigned.template.md'), 'UTF-8'
-  notYetSigned : fs.readFileSync path.resolve(__dirname, '../src/templates', 'notYetSigned.template.md'), 'UTF-8'
+alreadySigned = fs.readFileSync path.resolve(__dirname, 'expected/alreadySigned.md'), 'UTF-8'
+notYetSigned  = fs.readFileSync path.resolve(__dirname, 'expected/notYetSigned.md'), 'UTF-8'
 
 exports.comment  =
   getCommentBody: (test) ->
     test.expect 2
 
     test.equal alreadySigned,
-      comment.getCommentBody(yes, templates, {
+      comment.getCommentBody(yes, {
           image: no
           sender: 'davidpfahler'
           maintainer: 'boennemann'
@@ -26,7 +22,7 @@ exports.comment  =
       '"already signed comment body" looks good'
 
     test.equal notYetSigned,
-      comment.getCommentBody(no, templates, {
+      comment.getCommentBody(no, {
           image: no
           sender: 'davidpfahler'
           link: 'http://google.com'
