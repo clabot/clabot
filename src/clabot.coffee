@@ -1,6 +1,3 @@
-fs   = require 'fs'
-path = require 'path'
-
 _       = require 'lodash'
 express = require 'express'
 
@@ -11,9 +8,7 @@ exports.getApp = (options) ->
   _.defaults options,
     getContributors: (->[])
     token: null
-    templates:
-      alreadySigned: fs.readFileSync path.resolve(__dirname, 'templates', 'alreadySigned.template.md'), 'UTF-8'
-      notYetSigned: fs.readFileSync path.resolve(__dirname, 'templates', 'notYetSigned.template.md'), 'UTF-8'
+    templates: null
     templateData:
       image: no
       link: null
