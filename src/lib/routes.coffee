@@ -30,8 +30,8 @@ exports.notify = (req, res) ->
         console.log   'Fatal Error: GitHub refused to comment'
         res.send 500, 'Fatal Error: GitHub refused to comment'
       else
-        console.log "Comment created: #{payload.pull_request._links.html.href}"
-        res.send 200,
+        console.log   "Comment created: #{payload.pull_request._links.html.href}"
+        res.send 200, "Comment created: #{payload.pull_request._links.html.href}"
 
   if payload.action is 'opened'
 
