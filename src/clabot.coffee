@@ -3,7 +3,8 @@
 _       = require 'lodash'
 express = require 'express'
 
-routes = require './lib/routes'
+middlewares = require './lib/middlewares'
+routes      = require './lib/routes'
 
 exports.createApp = (options) ->
   # Just pick the options we need
@@ -18,21 +19,9 @@ exports.createApp = (options) ->
   # Create new Express app
   app = express()
 
-  # Middleware to allow CORS on all requests
-  allowCrossDomain = (req, res, next) ->
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,POST');
-    res.header('Access-Control-Allow-Headers', 'Content-Type,X-Hub-Signature');
-    next()
-
-  # Middleware to provide clabot options
-  provideClabotOptions = (req, res, next) ->
-    req.clabotOptions = options
-    next()
-
   # Apply middlewares
-  app.use allowCrossDomain
-  app.use provideClabotOptions
+  app.use middlewares.allowCrossDomain
+  app.use middlewares.provideClabotOptions options
   app.use express.bodyParser()
 
   # GET
