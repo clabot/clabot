@@ -5,10 +5,15 @@ path = require 'path'
 _      = require 'lodash'
 github = require 'github'
 
-exports.getCommentBody = (signed, templates, templateData) ->
+exports.getCommentBody = (signed, templates = {}, templateData) ->
   if arguments.length is 2
     templateData = templates
     templates = {}
+
+  _.defaults templateData,
+    image     : no
+    link      : no
+    maintainer: no
 
   if signed
     unless templates.alreadySigned

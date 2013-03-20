@@ -8,7 +8,6 @@ routes = require './lib/routes'
 exports.createApp = (options) ->
   # Just pick the options we need
   options = _.pick options, [
-    'getContributorsSync'
     'getContributors'
     'token'
     'templates'
