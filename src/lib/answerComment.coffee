@@ -40,7 +40,10 @@ exports = module.exports = (req, res, options, contractors, payload) ->
       commentData      = { user, repo, number }
       commentData.body = comment.getCommentBody signed,
           options.templates,
-          _.extend options.templateData, { sender: argument or sender, payload, check: yes }
+          _.extend options.templateData,
+            sender : argument or sender
+            payload: payload
+            check  : yes
 
       comment.send options.token, commentData, (err, data) ->
         if err
