@@ -20,8 +20,14 @@ module.exports = (grunt) ->
         dest: 'test'
         ext: '.js'
 
+    watch:
+      src:
+        files: ['**/*.coffee']
+        tasks: ['coffee']
+
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-nodeunit'
+  grunt.loadNpmTasks 'grunt-contrib-watch'
 
   grunt.registerTask 'test', ['coffee', 'nodeunit']
 
