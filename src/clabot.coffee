@@ -7,13 +7,21 @@ middlewares = require './lib/middlewares'
 routes      = require './lib/routes'
 
 exports.createApp = (options) ->
+
+  # Default options
+  _.defaults options,
+    skipContributors: yes
+    skipCollaborators: no
+
   # Just pick the options we need
   options = _.pick options, [
-    'getContributors'
+    'getContractors'
     'token'
     'templates'
     'templateData'
     'secrets'
+    'skipCollaborators'
+    'skipContributors'
   ]
 
   # Create new Express app
