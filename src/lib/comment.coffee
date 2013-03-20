@@ -14,6 +14,8 @@ exports.getCommentBody = (signed, templates = {}, templateData) ->
     image     : no
     link      : no
     maintainer: no
+    sender    : no
+    check     : no
 
   if signed
     unless templates.alreadySigned
