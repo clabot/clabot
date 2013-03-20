@@ -4,6 +4,7 @@ crypto = require 'crypto'
 
 _ = require 'lodash'
 
+answerComment     = require './answerComment'
 answerPullRequest = require './answerPullRequest'
 
 exports.notify = (req, res) ->
@@ -27,16 +28,18 @@ exports.notify = (req, res) ->
 
   delete req.rawBody
 
-  if hubSignature isnt payloadSignature
-    console.log   'Fatal Error: Untrusted source'
-    res.send 500, 'Fatal Error: Untrusted source'
-    return
+  # if hubSignature isnt payloadSignature
+  #   console.log   'Fatal Error: Untrusted source'
+  #   res.send 500, 'Fatal Error: Untrusted source'
+  #   return
 
   if _.isFunction options.getContractors
     options.getContractors (contractors) ->
 
       if payload.pull_request and payload.action is 'opened'
         answerPullRequest req, res, options, contractors, payload
+      else if payload.comment and payload.action is 'created'
+        answerComment req, res, options, contractors, payload
       else
         console.log   'Unexpected event. I\'ll just pretend nothing happened'
         res.send 200, 'Unexpected event. I\'ll just pretend nothing happened'
