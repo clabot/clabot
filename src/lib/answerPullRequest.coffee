@@ -22,7 +22,7 @@ exports = module.exports = (req, res, options, contractors, payload) ->
 
     comment.send options.token, commentData, (err, data) ->
       if err
-        console.log   JSON.parse err
+        console.log err
         console.log   'Fatal Error: GitHub refused to comment'
         res.send 500, 'Fatal Error: GitHub refused to comment'
       else
