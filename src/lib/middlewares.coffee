@@ -2,6 +2,8 @@
 
 qs = require 'qs'
 
+_ = require 'lodash'
+
 # Utils
 mime = (req) ->
   str = req.headers['content-type'] or ''
@@ -16,7 +18,7 @@ exports.allowCrossDomain = (req, res, next) ->
 
 exports.provideClabotOptions = (options) ->
   middleware = (req, res, next) ->
-    req.clabotOptions = options
+    req.clabotOptions = _.clone options
     next()
 
 exports.parseBodyKeepRaw = (req, res, next) ->
