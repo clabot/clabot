@@ -22,6 +22,7 @@ exports.createApp = (options) ->
   # Apply middlewares
   app.use middlewares.allowCrossDomain
   app.use middlewares.provideClabotOptions options
+  app.use middlewares.parseBodyKeepRaw
   app.use express.bodyParser()
 
   # GET

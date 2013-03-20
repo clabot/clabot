@@ -1,7 +1,7 @@
 {
   "name": "clabot",
   "description": "A bot to take the pain out of Contributor License Agreements",
-  "version": "0.0.3",
+  "version": "0.0.4-a1",
   "homepage": "https://github.com/clabot/clabot",
   "author": {
     "name": "Stephan Bönnemann",

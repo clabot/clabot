@@ -1,5 +1,7 @@
 'use strict'
 
+crypto = require 'crypto'
+
 _ = require 'lodash'
 
 comment     = require './comment'
@@ -12,6 +14,25 @@ exports.notify = (req, res) ->
   repo   = payload.repository.name
   sender = payload.sender.login
   user   = payload.repository.owner.login
+
+  secret = options.secrets[user][repo]
+
+  unless req.rawBody and hubSignature = req.get 'X-Hub-Signature'
+    console.log   'Fatal Error: Can not trust request without raw body'
+    res.send 500, 'Fatal Error: Can not trust request without raw body'
+    return
+
+  payloadSignature = 'sha1=' + crypto
+    .createHmac('sha1', secret)
+    .update(req.rawBody)
+    .digest('hex')
+
+  delete req.rawBody
+
+  if hubSignature isnt payloadSignature
+    console.log   'Fatal Error: Untrusted source'
+    res.send 500, 'Fatal Error: Untrusted source'
+    return
 
   handleComment = (contributors) ->
     signed = _.contains contributors, sender
