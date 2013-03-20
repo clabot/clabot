@@ -4,16 +4,13 @@ crypto = require 'crypto'
 
 _ = require 'lodash'
 
-comment  = require './comment'
-skip     = require './skip'
+answerPullRequest = require './answerPullRequest'
 
 exports.notify = (req, res) ->
   options = req.clabotOptions
   payload = JSON.parse req.body.payload
 
-  number = payload.number
   repo   = payload.repository.name
-  sender = payload.sender.login
   user   = payload.repository.owner.login
 
   secret = options.secrets?[user]?[repo] or ''
@@ -35,41 +32,18 @@ exports.notify = (req, res) ->
     res.send 500, 'Fatal Error: Untrusted source'
     return
 
-  handleComment = (contractors) ->
-    signed = _.contains contractors, sender
+  if _.isFunction options.getContractors
+    options.getContractors (contractors) ->
 
-    commentData      = { user, repo, number }
-    commentData.body = comment.getCommentBody signed,
-        options.templates,
-        _.extend options.templateData, { sender, payload }
-
-    comment.send options.token, commentData, (err, data) ->
-      if err
-        console.log   JSON.parse err
-        console.log   'Fatal Error: GitHub refused to comment'
-        res.send 500, 'Fatal Error: GitHub refused to comment'
+      if payload.pull_request and payload.action is 'opened'
+        answerPullRequest req, res, options, contractors, payload
       else
-        href = payload.pull_request._links.html.href
-        console.log   "Success: Comment created at #{href}"
-        res.send 200, "Success: Comment created at #{href}"
-
-  skipCollaborators = (contractors) ->
-    skip res, sender, options, contractors, { user, repo }, handleComment
-
-  getContractors = ->
-    options.getContractors skipCollaborators
-
-  if payload.action is 'opened'
-
-    if _.isFunction options.getContractors
-      getContractors()
-    else
-      console.log   'Fatal Error: options#getContractors not provided'
-      res.send 500, 'Fatal Error: options#getContractors not provided'
+        console.log   'Unexpected event. I\'ll just pretend nothing happened'
+        res.send 200, 'Unexpected event. I\'ll just pretend nothing happened'
 
   else
-    console.log   "Received \"#{payload.action}\", not an opened Pull Request"
-    res.send 200, "Received \"#{payload.action}\", not an opened Pull Request"
+    console.log   'Fatal Error: options#getContractors not provided'
+    res.send 500, 'Fatal Error: options#getContractors not provided'
 
 exports.default = (req, res) ->
   res.send 'always at your service, clabot'
