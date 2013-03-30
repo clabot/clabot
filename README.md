@@ -4,7 +4,7 @@
 
 clabot **automatically checks Pull Requests** submitted to your repository.
 
-If the sender hasn't signed the **C**onstributor **L**icense **A**greement, he **comments with instructions**, otherwise the maintainer will be notified.
+If the sender hasn't signed the **C**ontributor **L**icense **A**greement, he **comments with instructions**, otherwise the maintainer will be notified.
 
 *[What a CLA is and why you need one](http://en.wikipedia.org/wiki/Contributor_License_Agreement)*
 
