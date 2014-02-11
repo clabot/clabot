@@ -30,20 +30,20 @@
     "prepublish": "./node_modules/grunt-cli/bin/grunt coffee"
   },
   "dependencies": {
-    "github": "0.1.8",
-    "lodash": "~1.0.1",
-    "express": "~3.1.0",
-    "qs": "~0.5.4"
+    "github": "~0.1.13",
+    "lodash": "~2.4.1",
+    "express": "~3.4.8",
+    "qs": "~0.6.6"
   },
   "devDependencies": {
-    "grunt": "~0.4.0",
-    "grunt-cli": "0.1.6",
-    "grunt-contrib-coffee": "~0.6.2",
-    "grunt-contrib-nodeunit": "~0.1.2",
-    "grunt-contrib-watch": "~0.3.1"
+    "grunt": "~0.4.2",
+    "grunt-cli": "~0.1.13",
+    "grunt-contrib-coffee": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.3.0",
+    "grunt-contrib-watch": "~0.5.3"
   },
   "peerDependencies": {
-    "grunt": "~0.4.0"
+    "grunt": "~0.4.2"
   },
   "keywords": [
     "CLA",
