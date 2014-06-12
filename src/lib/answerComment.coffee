@@ -54,6 +54,26 @@ exports = module.exports = (req, res, options, contractors, payload) ->
           href = payload.comment.html_url
           console.log   "Success: Comment created at #{href}"
           res.send 200, "Success: Comment created at #{href}"
+    else if not err and method is 'accept' and data.login isnt poster
+      if poster is sender
+        signed = _.contains contractors, poster
+
+        if not signed
+          if _.isFunction options.addContractor
+            options.addContractor poster (addResponse) ->
+              console.log   "Added signee and got response = #{addResponse}"
+              res.send 200, "Added signee and got response = #{addResponse}"
+              #TODO handle the addContractor response
+              #TODO make a call to add an acceptance comment
+          else
+            console.log   'Fatal Error: options#addContractor not provided'
+            res.send 500, 'Fatal Error: options#addContractor not provided'
+        else
+          console.log   'Contractor has already accepted the CLA'
+          res.send 200, 'Contractor has already accepted the CLA'
+      else
+        console.log   'Contractor is not owner of the GitHub Pull Request'
+        res.send 200, 'Contractor is not owner of the GitHub Pull Request'
     else
       if err then console.log err
       console.log   'Could not find proper clabot command in comment'
