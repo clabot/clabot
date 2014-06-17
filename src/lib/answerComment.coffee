@@ -60,11 +60,15 @@ exports = module.exports = (req, res, options, contractors, payload) ->
 
         if not signed
           if _.isFunction options.addContractor
-            options.addContractor poster (addResponse) ->
-              console.log   "Added signee and got response = #{addResponse}"
-              res.send 200, "Added signee and got response = #{addResponse}"
-              #TODO handle the addContractor response
-              #TODO make a call to add an acceptance comment
+            options.addContractor poster, (err, data) ->
+              if err
+                console.log err
+                console.log   'Fatal Error: Unable to add signee'
+                res.send 500, 'Fatal Error: Unable to add signee'
+              else
+                console.log   "Added signee and got response = #{data}"
+                res.send 200, "Added signee and got response = #{data}"
+                #TODO make a call to add an acceptance comment
           else
             console.log   'Fatal Error: options#addContractor not provided'
             res.send 500, 'Fatal Error: options#addContractor not provided'
