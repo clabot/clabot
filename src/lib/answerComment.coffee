@@ -66,9 +66,19 @@ exports = module.exports = (req, res, options, contractors, payload) ->
                 console.log   'Fatal Error: Unable to add signee'
                 res.send 500, 'Fatal Error: Unable to add signee'
               else
-                console.log   "Added signee and got response = #{data}"
-                res.send 200, "Added signee and got response = #{data}"
-                #TODO make a call to add an acceptance comment
+                console.log   "Success: Added contractor"
+                commentData      = { user, repo, number }
+                #TODO: Grab the comment body from a template
+                commentData.body = "Thank you, #{user}, for signing our CLA"
+                comment.send options.token, commentData, (err, data) ->
+                  if err
+                    console.log err
+                    console.log
+                    res.send 200, "Partial Success: Added contractor, but GitHub refused confirmation comment"
+                  else
+                    href = payload.comment.html_url
+                    console.log   "Success: Comment created at #{href}"
+                    res.send 200, "Success: Added contractor and sent a confirmation comment at #{href}"
           else
             console.log   'Fatal Error: options#addContractor not provided'
             res.send 500, 'Fatal Error: options#addContractor not provided'
