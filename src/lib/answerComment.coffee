@@ -60,16 +60,18 @@ exports = module.exports = (req, res, options, contractors, payload) ->
 
         if not signed
           if _.isFunction options.addContractor
-            options.addContractor poster, (err, data) ->
-              if err
-                console.log err
+            options.addContractor poster, (success) ->
+              if not success
                 console.log   'Fatal Error: Unable to add signee'
                 res.send 500, 'Fatal Error: Unable to add signee'
               else
                 console.log   "Success: Added contractor"
                 commentData      = { user, repo, number }
-                #TODO: Grab the comment body from a template
-                commentData.body = "Thank you, #{user}, for signing our CLA"
+                commentData.body = comment.getCommentBody 'confirm',
+                    options.templates,
+                    _.extend options.templateData,
+                    sender : argument or sender
+                    payload: payload
                 comment.send options.token, commentData, (err, data) ->
                   if err
                     console.log err
