@@ -36,7 +36,7 @@ exports = module.exports = (res, sender, options, contractors, msg, callback) ->
       console.log   'Skipping Collaborator/Contributor'
       res.send 200, 'Skipping Collaborator/Contributor'
     else
-      callback()
+      callback(contractors)
 
   if options.skipCollaborators and options.skipContributors
     collabs [], (toBeSkipped) ->
@@ -49,7 +49,7 @@ exports = module.exports = (res, sender, options, contractors, msg, callback) ->
     contribs [], (toBeSkipped) ->
       skip toBeSkipped
   else
-    callback()
+    callback(contractors)
 
 
 
