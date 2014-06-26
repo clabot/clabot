@@ -83,6 +83,15 @@ Type: `Function`
 This function will be called by clabot in case he needs a list of all signed contractors.
 Provide a function here that queries your database and calls the callback with an array of GitHub usernames.
 
+#### addContractor(contractor, callback)
+
+Type: `Function`
+
+*optional*
+
+This function will be called by clabot in case he needs to add a contractor to the list of signed contractors.
+Provide a function here that adds a contractor to your database and calls the callback with a boolean success flag.
+
 #### token
 
 Type: `String`
