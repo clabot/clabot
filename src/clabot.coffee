@@ -16,6 +16,7 @@ exports.createApp = (options) ->
   # Just pick the options we need
   options = _.pick options, [
     'getContractors'
+    'addContractor'
     'token'
     'templates'
     'templateData'

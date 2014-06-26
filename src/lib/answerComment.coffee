@@ -54,6 +54,42 @@ exports = module.exports = (req, res, options, contractors, payload) ->
           href = payload.comment.html_url
           console.log   "Success: Comment created at #{href}"
           res.send 200, "Success: Comment created at #{href}"
+    else if not err and method is 'accept' and data.login isnt poster
+      if poster is sender
+        signed = _.contains contractors, poster
+
+        if not signed
+          if _.isFunction options.addContractor
+            options.addContractor poster, (success) ->
+              if not success
+                console.log   'Fatal Error: Unable to add signee'
+                res.send 500, 'Fatal Error: Unable to add signee'
+              else
+                console.log   "Success: Added contractor"
+                commentData      = { user, repo, number }
+                commentData.body = comment.getCommentBody 'confirm',
+                    options.templates,
+                    _.extend options.templateData,
+                    sender : argument or sender
+                    payload: payload
+                comment.send options.token, commentData, (err, data) ->
+                  if err
+                    console.log err
+                    console.log
+                    res.send 200, "Partial Success: Added contractor, but GitHub refused confirmation comment"
+                  else
+                    href = payload.comment.html_url
+                    console.log   "Success: Comment created at #{href}"
+                    res.send 200, "Success: Added contractor and sent a confirmation comment at #{href}"
+          else
+            console.log   'Fatal Error: options#addContractor not provided'
+            res.send 500, 'Fatal Error: options#addContractor not provided'
+        else
+          console.log   'Contractor has already accepted the CLA'
+          res.send 200, 'Contractor has already accepted the CLA'
+      else
+        console.log   'Contractor is not owner of the GitHub Pull Request'
+        res.send 200, 'Contractor is not owner of the GitHub Pull Request'
     else
       if err then console.log err
       console.log   'Could not find proper clabot command in comment'

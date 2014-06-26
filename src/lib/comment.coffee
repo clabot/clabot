@@ -17,7 +17,14 @@ exports.getCommentBody = (signed, templates = {}, templateData) ->
     sender    : no
     check     : no
 
-  if signed
+  if signed == 'confirm'
+    unless templates.confirmSigned
+      templates.confirmSigned = fs.readFileSync path.resolve(__dirname,
+          '../templates'
+          'confirmSigned.template.md')
+        , 'UTF-8'
+    _.template templates.confirmSigned, templateData
+  else if signed
     unless templates.alreadySigned
       templates.alreadySigned = fs.readFileSync path.resolve(__dirname,
           '../templates'
