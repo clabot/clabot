@@ -11,6 +11,8 @@ exports.notify = (req, res) ->
   options = req.clabotOptions
   payload = JSON.parse req.body.payload
 
+  return res.send(200) unless payload.repository?
+
   repo   = payload.repository.name
   user   = payload.repository.owner.login
 
