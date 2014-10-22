@@ -13,6 +13,9 @@ exports.createApp = (options) ->
     skipContributors: yes
     skipCollaborators: no
 
+  # Create new Express app
+  app = if options.app then options.app else express()
+
   # Just pick the options we need
   options = _.pick options, [
     'getContractors'
@@ -24,9 +27,6 @@ exports.createApp = (options) ->
     'skipCollaborators'
     'skipContributors'
   ]
-
-  # Create new Express app
-  app = express()
 
   # Apply middlewares
   app.use middlewares.allowCrossDomain
