@@ -58,6 +58,15 @@ app = require('clabot').createApp(options);
 app.listen(process.env.PORT || 1337);
 ```
 
+If your app requires middleware to be added before clabot's middleware, you can pass in an Express app for clabot to use instead of creating a new one.
+
+```js
+options.app = express();
+// add some middleware here
+app = require('clabot').createApp(options);
+app.listen(process.env.PORT || 1337);
+```
+
 In order to receive events from GitHub you have to subscribe.
 clabot will never push code to the repositories, but push access is required to be able to receive events from the GitHub API.
 
