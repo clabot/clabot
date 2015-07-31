@@ -4,7 +4,7 @@
 
 clabot **automatically checks Pull Requests** submitted to your repository.
 
-If the sender hasn't signed the **C**ontributor **L**icense **A**greement, he **comments with instructions**, otherwise the maintainer will be notified.
+If the sender hasn't signed the **C**ontributor **L**icense **A**greement, it **comments with instructions**, otherwise the maintainer will be notified.
 
 *[What a CLA is and why you need one](http://en.wikipedia.org/wiki/Contributor_License_Agreement)*
 
@@ -89,7 +89,7 @@ Type: `Function`
 
 *required*
 
-This function will be called by clabot in case he needs a list of all signed contractors.
+This function will be called by clabot in case it needs a list of all signed contractors.
 Provide a function here that queries your database and calls the callback with an array of GitHub usernames.
 
 #### addContractor(contractor, callback)
@@ -98,7 +98,7 @@ Type: `Function`
 
 *optional*
 
-This function will be called by clabot in case he needs to add a contractor to the list of signed contractors.
+This function will be called by clabot in case it needs to add a contractor to the list of signed contractors.
 Provide a function here that adds a contractor to your database and calls the callback with a boolean success flag.
 
 #### token
