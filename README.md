@@ -1,5 +1,7 @@
 # clabot [![Build Status](https://travis-ci.org/clabot/clabot.png?branch=master)](https://travis-ci.org/clabot/clabot)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/clabot/clabot.svg)](https://greenkeeper.io/)
+
 ![clabot](http://en.gravatar.com/userimage/20257526/bb65aa5c4ec93b91c4a2c620d2181d3d.png?size=256)
 
 clabot **automatically checks Pull Requests** submitted to your repository.
